@@ -13,8 +13,11 @@ function play()
 		if [ $number -eq 1 ]
 		then
 			((winCount++))
+			((stake++))
 		elif [ $number -eq 0 ]
 		then
 			((lossCount++))
+			((stake--))
 		fi;
 }
+play
