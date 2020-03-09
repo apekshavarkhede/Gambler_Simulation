@@ -38,8 +38,15 @@ lostMoney=0;
  		WinArray[$day]=$winMoney;
 		lostArray[$day]=$lostMoney
 done
-
-
+winSortedArray=( $( printf "%s\n" "${WinArray[@]}" | sort -nr ) )
+for (( i=1; i<${#WinArray[@]}; i++ ))
+do
+	if [ ${winSortedArray[0]} -eq ${WinArray[$i]} ]
+	then
+		echo Day you win maximum amount is: Day $i
+		break;
+	fi;
+done
 
 
 
