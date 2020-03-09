@@ -28,13 +28,17 @@ lostMoney=0;
 	do
 		play
 	done
+		if [ $winMoney -gt $lostMoney ]
+		then
+			echo $day you win by $(( $winMoney-$lostMoney ))
+		elif [ $lostMoney -gt $winMoney ]
+		then
+			echo $day you lost by $(( $lostMoney-$winMoney ))
+		fi;
  		WinArray[$day]=$winMoney;
 		lostArray[$day]=$lostMoney
 done
 
-
-echo "you win:: ${WinArray[@]}"
-echo "you lost:: ${lostArray[@]}"
 
 
 
