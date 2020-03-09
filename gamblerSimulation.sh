@@ -1,8 +1,8 @@
 #!/bin/bash -x
 echo "Welcome To Gambler Simulation:"
 days=30;
-declare -a WinArray
-declare -a lostArray
+declare -a arrayOfWinAmount
+declare -a arrayOfLostAmount
 function play()
 {
 	number=$(( RANDOM % 2 ))
@@ -30,23 +30,35 @@ lostMoney=0;
 	done
 		if [ $winMoney -gt $lostMoney ]
 		then
-			echo $day you win by $(( $winMoney-$lostMoney ))
+			echo $day you win by  $winMoney
+			arrayOfWinAmount[$day]=$winMoney;
 		elif [ $lostMoney -gt $winMoney ]
 		then
-			echo $day you lost by $(( $lostMoney-$winMoney ))
+			echo $day you lost by $lostMoney
+			arrayOfLostAmount[$day]=$lostMoney
 		fi;
- 		WinArray[$day]=$winMoney;
-		lostArray[$day]=$lostMoney
+
 done
-winSortedArray=( $( printf "%s\n" "${WinArray[@]}" | sort -nr ) )
-for (( i=1; i<${#WinArray[@]}; i++ ))
+
+#find the day in which user won maximum amount
+winSortedArray=( $( printf "%s\n" "${arrayOfWinAmount[@]}" | sort -nr ) )
+for (( i=1; i<${#arrayOfWinAmount[@]}; i++ ))
 do
-	if [ ${winSortedArray[0]} -eq ${WinArray[$i]} ]
+	if [[  ${arrayOfWinAmount[$i]} -eq ${winSortedArray[0]} ]]
 	then
-		echo Day you win maximum amount is: Day $i
+		echo Day you win maximum amount is Day $i
 		break;
 	fi;
 done
 
-
+#find the day in which user lost maximum amount
+sortArrayOfLostAmount=( $( printf "%s\n" "${arrayOfLostAmount[@]}" | sort -nr ) )
+for (( x=0; x<${#arrayOfLostAmount[@]}; x++ ))
+do
+   if [[ ${sortArrayOfLostAmount[0]} -eq ${arrayOfLostAmount[$x]} ]]
+   then
+      echo Day you lost maximum amount is Day $x
+      break;
+   fi;
+done
 
