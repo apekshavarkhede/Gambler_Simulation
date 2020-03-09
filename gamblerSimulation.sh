@@ -1,12 +1,14 @@
 #!/bin/bash -x
 echo "Welcome To Gambler Simulation:"
-read -p "How many times you want to play:" noOfTimes
 stake=100;
 chances=0;
 winMoney=0;
 looseMoney=0;
 chances=0;
+Days=20
 halfOfStake=$(( $stake - $stake/2 ))
+fullStake=$(( $stake + $stake/2 ))
+
 function play()
 {
 	number=$(( RANDOM % 2 ))
@@ -22,12 +24,15 @@ function play()
 		fi;
 }
 
-for (( count=1; count<=$noOfTimes; count++ ))
+while [[ $stake -lt $fullStake && $stake -gt $halfOfStake ]]
 do
-if [[ $winMoney -eq $halfOfStake || $looseMoney -eq $halfOfStake ]]
-then
-	break
-fi
 play
 done
 
+if [ $stake -eq $fullStake ]
+then
+	echo "You win halfOfStake, So u have to resign for the day"
+elif [ $stake -eq $halfOfStake ]
+then
+	echo "You lost halfOfStake, So u have to resign for the day"
+fi;
