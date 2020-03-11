@@ -3,6 +3,8 @@ echo "Welcome To Gambler Simulation:"
 days=30;
 declare -a arrayOfWinAmount
 declare -a arrayOfLostAmount
+win=0;
+lost=0;
 function play()
 {
 	number=$(( RANDOM % 2 ))
@@ -16,7 +18,8 @@ function play()
 			((stake--))
 		fi;
 }
-
+function calculate()
+{
 for (( day=1; day<=$days; day++ ))
 do
 stake=100;
@@ -30,14 +33,15 @@ lostMoney=0;
 	done
 		if [ $winMoney -gt $lostMoney ]
 		then
-			echo $day you win by  $winMoney
+			echo $day you win by $winMoney
+			win=$(( $win + $winMoney ))
 			arrayOfWinAmount[$day]=$winMoney;
 		elif [ $lostMoney -gt $winMoney ]
 		then
 			echo $day you lost by $lostMoney
+			lost=$(( $lost + $lostMoney ))
 			arrayOfLostAmount[$day]=$lostMoney
 		fi;
-
 done
 
 #find the day in which user won maximum amount
@@ -62,3 +66,20 @@ do
    fi;
 done
 
+echo w:$win
+echo l:$lost
+
+#ask user is he wish to continue the game
+if [ $win -gt $lost ]
+then
+read -p "U want to continue the game:" askUser
+while [[ $askUser = "Y" ]]
+do
+calculate
+done
+else
+	break
+fi;
+}
+
+calculate
